@@ -4,7 +4,6 @@ using System.Collections;
 public class EnnemiIA : MonoBehaviour {
 	private GameObject ennemi;
 	private GameObject player;
-	private GameObject newEnnemi;
 	private Vector2 posInit;
 	public Vector2 speed = new Vector2(1, 1);
 	private Vector2 posLeft;
@@ -18,7 +17,7 @@ public class EnnemiIA : MonoBehaviour {
 	void Start () {
 		ennemi = GameObject.FindGameObjectWithTag ("Ennemi");
 		player = GameObject.FindGameObjectWithTag ("Player");
-		newEnnemi = GameObject.Find("Ennemi");
+
 		posInit = ennemi.transform.position;
 		posLeft= new Vector2 (posInit.x-1, 0);
 

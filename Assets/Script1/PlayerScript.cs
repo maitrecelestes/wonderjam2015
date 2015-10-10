@@ -36,9 +36,6 @@ public class PlayerScript : MonoBehaviour
 		}
 		BossText = GameObject.Find ("TextBoss");
 		BossText.SetActive (false);
-		BossText2 = GameObject.Find ("TextBoss2");
-		BossText2.SetActive (false);
-		wall = GameObject.Find ("WallDes");
 		player = GameObject.Find ("Heros");
 		PauseCanvas = GameObject.Find ("PauseCanvas");
 		PauseCanvas.SetActive (false);

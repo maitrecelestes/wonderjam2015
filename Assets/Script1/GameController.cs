@@ -20,10 +20,10 @@ public class GameController : MonoBehaviour {
 	public void AddScore(int newScoreValue)
 	{
 		score += newScoreValue;
-		UpdateScore ();
+		//UpdateScore ();
 	}
 	void UpdateScore()
 	{
-		ScoreText.text = "Score: " + score;
+		//ScoreText.text = "Score: " + score;
 	}
 }

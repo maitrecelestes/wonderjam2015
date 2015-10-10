@@ -83,11 +83,6 @@ public class PlayerScritBoss1 : MonoBehaviour {
 		isjumping = false;
 		float pointCollision = player.transform.position.y;
 		Vector2 posEnemi = col.transform.position;
-		/*else{
-				player.SetActive(false);
-				Time.timeScale = 0;
-				GameOver.SetActive(true);
-			}*/
 		if (col.gameObject.CompareTag("Ennemi1")){
 			if (0.40 < pointCollision) {
 				add=true;
