@@ -6,7 +6,11 @@ public class PlayerScript2 : MonoBehaviour {
 
 	private Vector2 speed = new Vector2(10, 10);
 	private Vector2 movement;
+
+	//gestion saut
 	private bool isjumping= false;
+	private bool jumping= false;
+
 	private GameObject PauseCanvas; 
 	public GameObject shot;
 	public GameObject shot2;
@@ -34,39 +38,47 @@ public class PlayerScript2 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+
 		if (transform.position.y <= -4.3) {
 			isjumping = false;
 		}
 		float inputX = Input.GetAxis("Horizontal");
-		
+
+		if (inputX<0){
+			this.gameObject.GetComponent<SpriteRenderer>().sprite=imageG;
+		}
+		if (inputX>0){
+			this.gameObject.GetComponent<SpriteRenderer>().sprite=imageD;
+
+		} 
+		if (isjumping) {
+			inputX=inputX/2;
+		}
+
 		movement = new Vector2(
 			speed.x * inputX,
 			0);
 
-		if (inputX<0)
-		{
-			this.gameObject.GetComponent<SpriteRenderer>().sprite=imageG;
+		if (jumping) {
+			movement = new Vector2(
+				speed.x * inputX,
+				45);
+			jumping=false;
 		}
-		if (inputX>0)
-		{
-			this.gameObject.GetComponent<SpriteRenderer>().sprite=imageD;
-
-		} 
-
-
 
 		if (Input.GetKeyDown ("space")){
-			if(isjumping==false)
-			{
+			if(!isjumping){
 				movement = new Vector2(
 					speed.x * inputX,
-					75);
+					50);
 				isjumping=true;
+				jumping=true;
 			}
-			
 		}
-		
-		
+
+
+
 		
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{

@@ -2,24 +2,27 @@
 using System.Collections;
 
 public class EnnemiIA5 : MonoBehaviour {
-	private GameObject ennemi;
 	private GameObject Player;
 	private Vector2 speed = new Vector2(5, 5);
 
 
-	private int hp=6;
 	private bool isjumping=false;
 	private Vector2 movement;
 	private float fireRate=1;
 	private float nextFire;
-	private GameObject Vic;
+	private GameController5 gameController;
+	private int ScoreValue=1;
 	
 	// Use this for initialization
 	void Start () {
-		ennemi = GameObject.FindGameObjectWithTag ("Ennemi_niv5");
+		GameObject gameControllerObject = GameObject.FindWithTag ("GameController");
+		if (gameControllerObject != null) {
+			gameController=gameControllerObject.GetComponent<GameController5>();
+		}
+		if (gameControllerObject == null) {
+			Debug.Log("Cannot find 'GameController' script");
+		}
 		Player = GameObject.FindGameObjectWithTag ("Player");
-		Vic = GameObject.Find ("VictoryCanvas");
-		Vic.SetActive (false);
 
 
 	}
@@ -34,7 +37,7 @@ public class EnnemiIA5 : MonoBehaviour {
 			float moveX = -speed.x;
 			
 			
-		if (Player.transform.position.x > ennemi.transform.position.x) {
+		if (Player.transform.position.x > transform.position.x) {
 			moveX=speed.x;
 		}
 			
@@ -62,14 +65,11 @@ public class EnnemiIA5 : MonoBehaviour {
 	}
 	void OnCollisionEnter2D(Collision2D col)
 	{
-		if (col.gameObject.CompareTag ("Bolt")) {
-				hp=hp-2;
-				Destroy (col.gameObject);
-			if (hp==0){
-				Destroy (ennemi);
-				Time.timeScale = 0;
+		if (col.gameObject.CompareTag ("Fire")) {
+			Destroy (gameObject);
+			gameController.AddScore(ScoreValue);
 			}
 			
-		}
+
 	}
 }

@@ -8,25 +8,23 @@ public class PlayerScript : MonoBehaviour
 {
 	/// <summary>
 	/// 1 - La vitesse de déplacement
-	/// </summary>
 	private Vector2 speed = new Vector2(2, 2);
-	
-	// 2 - Stockage du mouvement
+	int ScoreValue=1;
+	int i=0;
+
 	private Vector2 movement;
 	private GameObject PauseCanvas; 
 	private GameObject GameOver; 
 	private GameObject player;
 	private GameObject wall;
+	private GameController gameController;
+	private GameObject BossText;
+	private GameObject BossText2;
 
 	//Gestion des sauts
 	private bool isjumping= false;
 	private bool jumping= false;
 
-	int ScoreValue=1;
-	private GameController gameController;
-	int i=0;
-	private GameObject BossText;
-	private GameObject BossText2;
 	bool add=false;
 
 	void Start()
@@ -69,7 +67,7 @@ public class PlayerScript : MonoBehaviour
 		if (transform.position.y <= 0.01118645) {
 			isjumping = false;
 		}
-		// 3 - Récupérer les informations du clavier/manette
+
 		float inputX = Input.GetAxis("Horizontal");
 		if (isjumping) {
 			inputX=inputX/2;
@@ -86,8 +84,7 @@ public class PlayerScript : MonoBehaviour
 		}
 
 		if (Input.GetKeyDown ("space")){
-			if(isjumping==false)
-			{
+			if(isjumping==false){
 				movement = new Vector2(
 				speed.x * inputX,
 				15);
@@ -97,18 +94,14 @@ public class PlayerScript : MonoBehaviour
 
 		}
 
-		
-
 
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
-			if (Time.timeScale == 1)
-			{
+			if (Time.timeScale == 1){
 				PauseCanvas.SetActive (true);
 				Time.timeScale = 0;
 			}
-			else
-			{
+			else{
 				PauseCanvas.SetActive (false);
 				Time.timeScale = 1;
 			}

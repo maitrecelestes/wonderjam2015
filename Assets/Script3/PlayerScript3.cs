@@ -6,7 +6,10 @@ public class PlayerScript3 : MonoBehaviour {
 	
 	private Vector2 speed = new Vector2(10, 10);
 	private Vector2 movement;
+
+	//Gestion saut
 	private bool isjumping= false;
+	private bool jumping= false;
 	
 	public GameObject shield;
 	private bool murActive;
@@ -22,12 +25,13 @@ public class PlayerScript3 : MonoBehaviour {
 	private float fireRate=1;
 	private float nextFire;
 	
-	public Sprite[] Images;
+	public Sprite imageG;
+	public Sprite imageD;
 	
-	// Use this for initialization
+
 	void Start () {
 		
-		//images = Resources.LoadAll<Sprite>("Assets/Textures3");
+
 		murActive = false;
 		Player = GameObject.FindGameObjectWithTag ("Player");
 		PauseCanvas = GameObject.Find ("PauseCanvas");
@@ -43,8 +47,23 @@ public class PlayerScript3 : MonoBehaviour {
 		if (transform.position.y <= -4.3) {
 			isjumping = false;
 		}
-		
+
 		float inputX = Input.GetAxis ("Horizontal");
+
+
+		if (inputX<0){
+			this.gameObject.GetComponent<SpriteRenderer>().sprite=imageG;
+		}
+		if (inputX>0){
+			this.gameObject.GetComponent<SpriteRenderer>().sprite=imageD;
+			
+		} 
+		if (isjumping) {
+			inputX=inputX/2;
+		}
+
+
+
 		movement = new Vector2 (
 			inputX * speed.x,
 			0);
@@ -66,12 +85,20 @@ public class PlayerScript3 : MonoBehaviour {
 			if (isjumping == false) {
 				movement = new Vector2 (
 					speed.x * 1,
-					75);
+					150);
 				isjumping = true;
+				jumping=true;
 			}
-			
 		}
-		
+
+		if (jumping) {
+			movement = new Vector2(
+				speed.x * inputX,
+				120);
+			jumping=false;
+		}
+
+		//MENU PAUSE
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			if (Time.timeScale == 1) {
 				PauseCanvas.SetActive (true);
@@ -81,6 +108,10 @@ public class PlayerScript3 : MonoBehaviour {
 				Time.timeScale = 1;
 			}
 		}
+
+
+
+		// GESTION DU TIR
 		if (Input.GetKey (KeyCode.RightControl) && Time.time > nextFire && !murActive) {
 			Vector3 vector = new Vector3 (gameObject.transform.position.x + 1, gameObject.transform.position.y, 0);
 			nextFire = Time.time + fireRate;

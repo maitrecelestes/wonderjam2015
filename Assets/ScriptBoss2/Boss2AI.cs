@@ -17,7 +17,10 @@ public class Boss2AI : MonoBehaviour {
 	public Transform ShotSpawn;
 	private GameObject Player;
 	private GameObject Vic;
-	
+
+	public Sprite imageG;
+	public Sprite imageD;
+
 	// Use this for initialization
 	void Start () {
 		ennemi = GameObject.FindGameObjectWithTag ("Ennemi_niv3");
@@ -31,10 +34,12 @@ public class Boss2AI : MonoBehaviour {
 	
 	// Deplacement des ennemis
 	void Update () { 
+
 		if (transform.position.x - Player.transform.position.x > 0) {
 			movement = new Vector2 (
 				-speed.x,
 				0);
+			this.gameObject.GetComponent<SpriteRenderer>().sprite=imageG;
 			if (Time.time > nextFire) {
 				Vector3 vector = new Vector3 (gameObject.transform.position.x - 1, gameObject.transform.position.y, 0);
 				nextFire = Time.time + fireRate;
@@ -45,14 +50,13 @@ public class Boss2AI : MonoBehaviour {
 			movement = new Vector2 (
 				speed.x,
 				0);
+			this.gameObject.GetComponent<SpriteRenderer>().sprite=imageD;
 			if (Time.time > nextFire) {
 				Vector3 vector = new Vector3 (gameObject.transform.position.x + 1, gameObject.transform.position.y, 0);
 				nextFire = Time.time + fireRate;
 				Instantiate (shot, vector, ShotSpawn.rotation);
-			}
-			
+			}	
 		}
-		
 	}
 	
 	
@@ -72,8 +76,7 @@ public class Boss2AI : MonoBehaviour {
 				Destroy (ennemi);
 				Vic.SetActive(true);
 				Time.timeScale = 0;
-			}
-			
+			}	
 		}
 	}
 }

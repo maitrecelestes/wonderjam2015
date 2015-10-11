@@ -10,24 +10,32 @@ public class PlayerScript5 : MonoBehaviour {
 	private GameObject PauseCanvas; 
 	private GameObject GameOver; 
 
+
+
 	private bool isjumping= false;
 	private GameObject Player;
 	private float fireRate=1;
 	private float nextFire;
-
-	public Sprite[] Images;
+	
+	public GameObject feu;
+	public GameObject feu2;
+	private GameObject zoneFeu;
+	private bool feuActivated=false;
+	
 
 	// Use this for initialization
 	void Start () {
 	
-		//images = Resources.LoadAll<Sprite>("Assets/Textures3");
+
 
 		Player = GameObject.FindGameObjectWithTag ("Player");
 		PauseCanvas = GameObject.Find ("PauseCanvas");
 		PauseCanvas.SetActive (false);
+
 		GameOver = GameObject.Find ("GameOver");
 		GameOver.SetActive (false);
 
+		zoneFeu = GameObject.Find("zoneFeu");
 	}
 
 
@@ -49,6 +57,27 @@ public class PlayerScript5 : MonoBehaviour {
 
 		if (transform.position.y <= 1.10) {
 			isjumping = false;
+		}
+
+		if (Input.GetKeyDown (KeyCode.Z)) {
+			if (feuActivated) {
+				Destroy (GameObject.FindGameObjectWithTag ("Fire"));
+				feuActivated = false;
+			} else {
+				Vector2 posFeu = new Vector2 (zoneFeu.transform.position.x+1, zoneFeu.transform.position.y);
+				Instantiate (feu, posFeu, Quaternion.identity);
+				feuActivated = true;
+			}
+		}
+		if (Input.GetKeyDown (KeyCode.E)) {
+			if (feuActivated) {
+				Destroy (GameObject.FindGameObjectWithTag ("Fire"));
+				feuActivated = false;
+			} else {
+				Vector2 posFeu2 = new Vector2 (zoneFeu.transform.position.x-5, zoneFeu.transform.position.y);
+				Instantiate (feu2, posFeu2, Quaternion.identity);
+				feuActivated = true;
+			}
 		}
 
 

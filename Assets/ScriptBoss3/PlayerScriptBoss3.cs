@@ -5,8 +5,10 @@ public class PlayerScriptBoss3 : MonoBehaviour {
 
 	private Vector2 speed = new Vector2(10, 10);
 	private Vector2 movement;
+
 	private bool isjumping= false;
-	
+	private bool jumping= false;
+
 	public GameObject shield;
 	private bool murActive;
 	
@@ -21,7 +23,9 @@ public class PlayerScriptBoss3 : MonoBehaviour {
 	private float fireRate=1;
 	private float nextFire;
 	
-	public Sprite[] Images;
+	public Sprite imageG;
+	public Sprite imageD;
+
 	
 	// Use this for initialization
 	void Start () {
@@ -45,6 +49,15 @@ public class PlayerScriptBoss3 : MonoBehaviour {
 		}
 		
 		float inputX = Input.GetAxis ("Horizontal");
+
+		if (inputX<0){
+			this.gameObject.GetComponent<SpriteRenderer>().sprite=imageG;
+		}
+		if (inputX>0){
+			this.gameObject.GetComponent<SpriteRenderer>().sprite=imageD;
+			
+		} 
+
 		movement = new Vector2 (
 			inputX * speed.x,
 			0);
@@ -61,16 +74,24 @@ public class PlayerScriptBoss3 : MonoBehaviour {
 			}
 			
 		}
+
+		if (jumping) {
+			movement = new Vector2(
+				speed.x * inputX,
+				35);
+			jumping=false;
+		}
 		
 		if (Input.GetKeyDown ("space")) {
 			if (isjumping == false) {
 				movement = new Vector2 (
-					speed.x * 1,
-					75);
+					speed.x * inputX,
+					45);
 				isjumping = true;
+				jumping = true;
 			}
-			
 		}
+
 		
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			if (Time.timeScale == 1) {

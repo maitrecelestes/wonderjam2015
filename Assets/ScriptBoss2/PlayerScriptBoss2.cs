@@ -6,7 +6,10 @@ public class PlayerScriptBoss2 : MonoBehaviour {
 	
 	private Vector2 speed = new Vector2(10, 10);
 	private Vector2 movement;
+
 	private bool isjumping= false;
+	private bool jumping= false;
+
 	private GameObject PauseCanvas; 
 	public GameObject shot;
 	public GameObject shot2;
@@ -15,7 +18,11 @@ public class PlayerScriptBoss2 : MonoBehaviour {
 	private float nextFire;
 	private GameObject GameOver; 
 	private GameObject player;
-	// Use this for initialization
+
+	public Sprite imageG;
+	public Sprite imageD;
+
+
 	void Start () {
 		
 		PauseCanvas = GameObject.Find ("PauseCanvas");
@@ -31,18 +38,37 @@ public class PlayerScriptBoss2 : MonoBehaviour {
 			isjumping = false;
 		}
 		float inputX = Input.GetAxis("Horizontal");
-		
+		if (inputX<0){
+			this.gameObject.GetComponent<SpriteRenderer>().sprite=imageG;
+		}
+		if (inputX>0){
+			this.gameObject.GetComponent<SpriteRenderer>().sprite=imageD;
+			
+		}
+		if (isjumping) {
+			inputX=inputX/2;
+		}
+
 		movement = new Vector2(
 			speed.x * inputX,
 			0);
-		
+
+
+		if (jumping) {
+			movement = new Vector2(
+				speed.x * inputX,
+				35);
+			jumping=false;
+		}
+
 		if (Input.GetKeyDown ("space")){
 			if(isjumping==false)
 			{
 				movement = new Vector2(
 					speed.x * inputX,
-					75);
+					45);
 				isjumping=true;
+				jumping=true;
 			}
 			
 		}
