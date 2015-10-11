@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerScript2 : MonoBehaviour {
+public class PlayerScriptBoss2 : MonoBehaviour {
 
-
+	
 	private Vector2 speed = new Vector2(10, 10);
 	private Vector2 movement;
 	private bool isjumping= false;
@@ -27,7 +27,7 @@ public class PlayerScript2 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (transform.position.y <= -4.3) {
+		if (transform.position.y <= 0.24) {
 			isjumping = false;
 		}
 		float inputX = Input.GetAxis("Horizontal");
@@ -72,7 +72,7 @@ public class PlayerScript2 : MonoBehaviour {
 			nextFire = Time.time + fireRate;
 			Instantiate (shot, vector, ShotSpawn.rotation);
 		}
-
+		
 		
 	}
 	
@@ -87,7 +87,7 @@ public class PlayerScript2 : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D col)
 	{
 		isjumping = false;
-		if (col.gameObject.CompareTag ("Ennemi")) {
+		if (col.gameObject.CompareTag ("Ennemi_niv3") || col.gameObject.CompareTag("EnnemiBolt")) {
 			player.SetActive (false);
 			Time.timeScale = 0;
 			GameOver.SetActive (true);

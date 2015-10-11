@@ -24,7 +24,7 @@ public class PlayerScript : MonoBehaviour
 	private GameObject BossText;
 	private GameObject BossText2;
 	bool add=false;
-
+	
 	void Start()
 	{
 		GameObject gameControllerObject = GameObject.FindWithTag ("GameController");
@@ -36,6 +36,9 @@ public class PlayerScript : MonoBehaviour
 		}
 		BossText = GameObject.Find ("TextBoss");
 		BossText.SetActive (false);
+		BossText2 = GameObject.Find ("TextBoss2");
+		BossText2.SetActive (false);
+		wall = GameObject.Find ("WallDes");
 		player = GameObject.Find ("Heros");
 		PauseCanvas = GameObject.Find ("PauseCanvas");
 		PauseCanvas.SetActive (false);
@@ -68,20 +71,20 @@ public class PlayerScript : MonoBehaviour
 		movement = new Vector2(
 			speed.x * inputX,
 			0);
-
+		
 		if (Input.GetKeyDown ("space")){
 			if(isjumping==false)
 			{
 				movement = new Vector2(
-				speed.x * inputX,
-				20);
+					speed.x * inputX,
+					20);
 				isjumping=true;
 			}
-
+			
 		}
-
-
-
+		
+		
+		
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
 			if (Time.timeScale == 1)
@@ -95,7 +98,7 @@ public class PlayerScript : MonoBehaviour
 				Time.timeScale = 1;
 			}
 		}
-
+		
 	}
 	
 	void FixedUpdate()
@@ -112,9 +115,9 @@ public class PlayerScript : MonoBehaviour
 		float pointCollision = player.transform.position.y;
 		Vector2 posEnemi = col.transform.position;
 		if(col.gameObject.CompareTag("Ennemi")){
-
+			
 			if (posEnemi.y+0.08 < pointCollision) { //On ajoute 0.2 pour prendre en compte la taille de l'ennemi
-
+				
 				add=true;
 				col.gameObject.SetActive(false);
 				i++;
@@ -127,11 +130,11 @@ public class PlayerScript : MonoBehaviour
 				Time.timeScale = 0;
 				GameOver.SetActive(true);
 			}*/
-			} else if (col.gameObject.CompareTag("Ennemi1")){
-				if (0.40 < pointCollision) {
-					add=true;
-				}
+		} else if (col.gameObject.CompareTag("Ennemi1")){
+			if (0.40 < pointCollision) {
+				add=true;
+			}
 		}
 	}
-
+	
 }

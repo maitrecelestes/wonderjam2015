@@ -15,17 +15,13 @@ public class GameController2 : MonoBehaviour {
 	private GameObject Textinfo;
 	private GameObject Textvictoire;
 	private GameObject Player;
-	private GameObject ButtonWin;
 	private int j=0;
-
 	// Use this for initialization
 	void Start () {
 		Textinfo = GameObject.Find ("Info");
 		Textvictoire = GameObject.Find ("victoire");
 		Textvictoire.SetActive (false);
 		Player = GameObject.Find ("Heros");
-		ButtonWin = GameObject.Find ("ButtonWin");
-		ButtonWin.SetActive (false);
 		score = 0;
 		UpdateScore ();
 		StartCoroutine( SpawnWaves ());
@@ -43,7 +39,8 @@ public class GameController2 : MonoBehaviour {
 				if(score==20)
 				{
 					Textvictoire.SetActive (true);
-					ButtonWin.SetActive(true);
+					yield return new WaitForSeconds (4);
+					Application.LoadLevel (4);
 					break;
 				}
 				j++;

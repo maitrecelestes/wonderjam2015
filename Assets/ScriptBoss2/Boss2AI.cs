@@ -1,34 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnnemiIA3 : MonoBehaviour {
+public class Boss2AI : MonoBehaviour {
 	private GameObject ennemi;
 	private GameObject player;
 	private Vector2 speed = new Vector2(5, 5);
+	
+	private int hp=6;
 	private bool versRight;
 	public bool modePoursuite;
 	private Vector2 movement;
-	private int ScoreValue=1;
-	private float fireRate=1;
-	private float nextFire=0;
+	private float fireRate=3;
+	private float nextFire=2;
+	public GameObject shot;
 	public GameObject shot2;
 	public Transform ShotSpawn;
 	private GameObject Player;
-	private GameController3 gameController;
+	private GameObject Vic;
 	
 	// Use this for initialization
 	void Start () {
-		GameObject gameControllerObject = GameObject.FindWithTag ("GameController");
-		if (gameControllerObject != null) {
-			gameController=gameControllerObject.GetComponent<GameController3>();
-		}
-		if (gameControllerObject == null) {
-			Debug.Log("Cannot find 'GameController' script");
-		}
 		ennemi = GameObject.FindGameObjectWithTag ("Ennemi_niv3");
 		player = GameObject.FindGameObjectWithTag ("Player");
 		Player = GameObject.Find ("Heros");
-
+		Vic = GameObject.Find ("VictoryCanvas");
+		Vic.SetActive (false);
+		
 		versRight = false;
 	}
 	
@@ -38,37 +35,45 @@ public class EnnemiIA3 : MonoBehaviour {
 			movement = new Vector2 (
 				-speed.x,
 				0);
-			if (Time.time > nextFire && transform.position.x - Player.transform.position.x < 6.5) {
-				Vector3 vector = new Vector3 (gameObject.transform.position.x - 2, gameObject.transform.position.y, 0);
+			if (Time.time > nextFire) {
+				Vector3 vector = new Vector3 (gameObject.transform.position.x - 1, gameObject.transform.position.y, 0);
 				nextFire = Time.time + fireRate;
 				Instantiate (shot2, vector, ShotSpawn.rotation);
 			}
-		} else {
+		}
+		else{
 			movement = new Vector2 (
 				speed.x,
 				0);
+			if (Time.time > nextFire) {
+				Vector3 vector = new Vector3 (gameObject.transform.position.x + 1, gameObject.transform.position.y, 0);
+				nextFire = Time.time + fireRate;
+				Instantiate (shot, vector, ShotSpawn.rotation);
+			}
+			
 		}
-
+		
 	}
-
-
 	
 	
 	void FixedUpdate()
 	{
 		// 5 - Déplacement
-		//GetComponent<Rigidbody2D>().velocity = movement;
-
+		GetComponent<Rigidbody2D>().velocity = movement;
+		
 		
 	}
 	void OnCollisionEnter2D(Collision2D col)
 	{
 		if (col.gameObject.CompareTag ("Bolt")) {
-				gameController.AddScore(ScoreValue);
-				Destroy (col.gameObject);
-				Destroy (gameObject);
+			hp=hp-2;
+			Destroy (col.gameObject);
+			if (hp==0){
+				Destroy (ennemi);
+				Vic.SetActive(true);
+				Time.timeScale = 0;
 			}
 			
+		}
 	}
-
 }
