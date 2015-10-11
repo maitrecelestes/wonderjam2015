@@ -17,14 +17,18 @@ public class PlayerScript : MonoBehaviour
 	private GameObject GameOver; 
 	private GameObject player;
 	private GameObject wall;
+
+	//Gestion des sauts
 	private bool isjumping= false;
+	private bool jumping= false;
+
 	int ScoreValue=1;
 	private GameController gameController;
 	int i=0;
 	private GameObject BossText;
 	private GameObject BossText2;
 	bool add=false;
-	
+
 	void Start()
 	{
 		GameObject gameControllerObject = GameObject.FindWithTag ("GameController");
@@ -55,7 +59,7 @@ public class PlayerScript : MonoBehaviour
 			BossText2.SetActive (true);
 		else
 			BossText2.SetActive (false);
-		if (transform.position.x > 18.2)
+		if (transform.position.x > 18)
 			Application.LoadLevel (2);
 		if (transform.position.y <= -2) {
 			player.SetActive(false);
@@ -67,24 +71,35 @@ public class PlayerScript : MonoBehaviour
 		}
 		// 3 - Récupérer les informations du clavier/manette
 		float inputX = Input.GetAxis("Horizontal");
-		
+		if (isjumping) {
+			inputX=inputX/2;
+		}
 		movement = new Vector2(
 			speed.x * inputX,
 			0);
-		
+
+		if (jumping) {
+			movement = new Vector2(
+				speed.x * inputX,
+				10);
+			jumping=false;
+		}
+
 		if (Input.GetKeyDown ("space")){
 			if(isjumping==false)
 			{
 				movement = new Vector2(
-					speed.x * inputX,
-					20);
+				speed.x * inputX,
+				15);
 				isjumping=true;
+				jumping=true;
 			}
-			
+
 		}
+
 		
-		
-		
+
+
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
 			if (Time.timeScale == 1)
@@ -98,9 +113,11 @@ public class PlayerScript : MonoBehaviour
 				Time.timeScale = 1;
 			}
 		}
-		
+
 	}
-	
+
+
+
 	void FixedUpdate()
 	{
 		GetComponent<Rigidbody2D>().velocity = movement;
@@ -115,9 +132,9 @@ public class PlayerScript : MonoBehaviour
 		float pointCollision = player.transform.position.y;
 		Vector2 posEnemi = col.transform.position;
 		if(col.gameObject.CompareTag("Ennemi")){
-			
+
 			if (posEnemi.y+0.08 < pointCollision) { //On ajoute 0.2 pour prendre en compte la taille de l'ennemi
-				
+
 				add=true;
 				col.gameObject.SetActive(false);
 				i++;
@@ -130,11 +147,11 @@ public class PlayerScript : MonoBehaviour
 				Time.timeScale = 0;
 				GameOver.SetActive(true);
 			}*/
-		} else if (col.gameObject.CompareTag("Ennemi1")){
-			if (0.40 < pointCollision) {
-				add=true;
-			}
+			} else if (col.gameObject.CompareTag("Ennemi1")){
+				if (0.40 < pointCollision) {
+					add=true;
+				}
 		}
 	}
-	
+
 }

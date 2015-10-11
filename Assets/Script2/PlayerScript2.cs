@@ -15,9 +15,16 @@ public class PlayerScript2 : MonoBehaviour {
 	private float nextFire;
 	private GameObject GameOver; 
 	private GameObject player;
+
+	public Sprite imageG;
+	public Sprite imageD;
+
+
 	// Use this for initialization
 	void Start () {
-		
+
+
+		//images = Resources.LoadAll<Sprite>("Assets/Textures3");
 		PauseCanvas = GameObject.Find ("PauseCanvas");
 		PauseCanvas.SetActive (false);
 		player = GameObject.Find ("Heros");
@@ -35,7 +42,19 @@ public class PlayerScript2 : MonoBehaviour {
 		movement = new Vector2(
 			speed.x * inputX,
 			0);
-		
+
+		if (inputX<0)
+		{
+			this.gameObject.GetComponent<SpriteRenderer>().sprite=imageG;
+		}
+		if (inputX>0)
+		{
+			this.gameObject.GetComponent<SpriteRenderer>().sprite=imageD;
+
+		} 
+
+
+
 		if (Input.GetKeyDown ("space")){
 			if(isjumping==false)
 			{

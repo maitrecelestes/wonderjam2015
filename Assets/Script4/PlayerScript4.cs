@@ -7,9 +7,6 @@ public class PlayerScript4 : MonoBehaviour {
 	private Vector2 speed = new Vector2(10, 10);
 	private Vector2 movement;
 
-	public GameObject shield;
-	private bool murActive;
-
 	private GameObject PauseCanvas; 
 	private GameObject GameOver; 
 
@@ -28,7 +25,6 @@ public class PlayerScript4 : MonoBehaviour {
 	
 		//images = Resources.LoadAll<Sprite>("Assets/Textures3");
 
-		murActive = false;
 		Player = GameObject.FindGameObjectWithTag ("Player");
 		PauseCanvas = GameObject.Find ("PauseCanvas");
 		PauseCanvas.SetActive (false);
@@ -57,19 +53,16 @@ public class PlayerScript4 : MonoBehaviour {
 
 		} */
 
-
-		if(Input.GetKeyDown(KeyCode.Z)){
-			if (murActive){
-				Destroy(GameObject.FindGameObjectWithTag("Shield"));
-				murActive=false;
-			} else {
-				Vector2 posMur= new Vector2(Player.transform.position.x+1,Player.transform.position.y);
-				Instantiate (shield, posMur, Quaternion.identity);
-				murActive=true;
-			}
-
+		if (Input.GetKey (KeyCode.RightControl) && Time.time > nextFire) {
+			Vector3 vector = new Vector3 (gameObject.transform.position.x + 2, gameObject.transform.position.y, 0);
+			nextFire = Time.time + fireRate;
+			Instantiate (shot, ShotSpawn.position, ShotSpawn.rotation);
 		}
-
+		if (Input.GetKey (KeyCode.LeftControl) && Time.time > nextFire) {
+			Vector3 vector = new Vector3 (gameObject.transform.position.x - 2, gameObject.transform.position.y, 0);
+			nextFire = Time.time + fireRate;
+			Instantiate (shot2, vector, ShotSpawn.rotation);
+		}
 
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
@@ -84,21 +77,11 @@ public class PlayerScript4 : MonoBehaviour {
 				Time.timeScale = 1;
 			}
 		}
-		if (Input.GetKey (KeyCode.RightControl) && Time.time > nextFire && !murActive) {
-			Vector3 vector= new Vector3(gameObject.transform.position.x+1,gameObject.transform.position.y,0);
-			nextFire = Time.time + fireRate;
-			Instantiate (shot, ShotSpawn.position, ShotSpawn.rotation);
-		}
-		if (Input.GetKey (KeyCode.LeftControl) && Time.time > nextFire && !murActive) {
-			Vector3 vector= new Vector3(gameObject.transform.position.x-1,gameObject.transform.position.y,0);
-			nextFire = Time.time + fireRate;
-			Instantiate (shot2, vector, ShotSpawn.rotation);
-		}
 
 		
 	}
 	void OnCollisionEnter2D(Collision2D col){
-		if (col.gameObject.CompareTag ("Ennemi_niv3") || col.gameObject.CompareTag("EnnemiBolt")) {
+		if (col.gameObject.CompareTag ("Ennemi_niv4") || col.gameObject.CompareTag("Missile")) {
 			gameObject.SetActive (false);
 			Time.timeScale = 0;
 			GameOver.SetActive (true);
