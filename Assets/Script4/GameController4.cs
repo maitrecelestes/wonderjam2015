@@ -7,6 +7,9 @@ public class GameController4 : MonoBehaviour {
 	public Text ScoreText;
 	private int score;
 	GameObject Text;
+	public AudioClip impact;
+
+
 	// Use this for initialization
 	void Start () {
 		Text = GameObject.Find ("Boss");
@@ -24,6 +27,8 @@ public class GameController4 : MonoBehaviour {
 	public void AddScore(int newScoreValue)
 	{
 		score += newScoreValue;
+		AudioSource audio=gameObject.AddComponent<AudioSource>();
+		audio.PlayOneShot(impact);
 		UpdateScore ();
 	}
 	void UpdateScore()

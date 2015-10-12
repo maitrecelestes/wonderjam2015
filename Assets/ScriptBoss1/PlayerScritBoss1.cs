@@ -18,6 +18,7 @@ public class PlayerScritBoss1 : MonoBehaviour {
 	
 	void Start()
 	{
+		Time.timeScale = 1;
 		player = GameObject.Find ("Heros");
 		PauseCanvas = GameObject.Find ("PauseCanvas");
 		PauseCanvas.SetActive (false);

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Boss3AI : MonoBehaviour {
 
@@ -13,8 +14,10 @@ public class Boss3AI : MonoBehaviour {
 	private float fireRate=3;
 	private float nextFire;
 	public GameObject shot;
+	public Text text;
 	public Transform ShotSpawn;
 	private GameObject Vic;
+	public AudioClip impact;
 	
 	// Use this for initialization
 	void Start () {
@@ -28,14 +31,8 @@ public class Boss3AI : MonoBehaviour {
 	
 	// Deplacement des ennemis
 	void Update () { 
-		/*if(transform.position.x-Player.transform.position.x>0)
-			movement = new Vector2 (
-				-speed.x,
-				0);
-		else
-			movement = new Vector2 (
-				speed.x,
-				0);*/
+		text.text = "HP: " + hp.ToString();
+
 		if (transform.position.x - Player.transform.position.x > 0) {
 			if (Time.time > nextFire) {
 			nextFire = Time.time + fireRate;
@@ -69,9 +66,12 @@ public class Boss3AI : MonoBehaviour {
 	{
 		if (col.gameObject.CompareTag ("Bolt")) {
 			hp=hp-2;
+			AudioSource audio=gameObject.AddComponent<AudioSource>();
+			audio.PlayOneShot(impact);
 			Destroy (col.gameObject);
 			if (hp==0){
 				Destroy (ennemi);
+				Player.SetActive(false);
 				Vic.SetActive(true);
 				Time.timeScale = 0;
 			}

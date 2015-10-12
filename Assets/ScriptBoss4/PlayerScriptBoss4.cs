@@ -22,8 +22,7 @@ public class PlayerScriptBoss4 : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		
-		//images = Resources.LoadAll<Sprite>("Assets/Textures3");
-		
+		Time.timeScale = 1;
 		Player = GameObject.FindGameObjectWithTag ("Player");
 		PauseCanvas = GameObject.Find ("PauseCanvas");
 		PauseCanvas.SetActive (false);

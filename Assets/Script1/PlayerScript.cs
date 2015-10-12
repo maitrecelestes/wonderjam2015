@@ -21,7 +21,9 @@ public class PlayerScript : MonoBehaviour
 	private GameObject BossText;
 	private GameObject BossText2;
 
-	//Gestion des sauts
+
+	public AudioClip impact;
+
 	private bool isjumping= false;
 	private bool jumping= false;
 
@@ -36,6 +38,7 @@ public class PlayerScript : MonoBehaviour
 		if (gameControllerObject == null) {
 			Debug.Log("Cannot find 'GameController' script");
 		}
+		Time.timeScale = 1;
 		BossText = GameObject.Find ("TextBoss");
 		BossText.SetActive (false);
 		BossText2 = GameObject.Find ("TextBoss2");
@@ -59,15 +62,24 @@ public class PlayerScript : MonoBehaviour
 			BossText2.SetActive (false);
 		if (transform.position.x > 18)
 			Application.LoadLevel (2);
-		if (transform.position.y <= -2) {
+		if (transform.position.y <= -0.3) {
 			player.SetActive(false);
 			Time.timeScale = 0;
 			GameOver.SetActive(true);
 		}
-		if (transform.position.y <= 0.01118645) {
+		if (transform.position.y <= 0.01118645 && transform.position.y>=0) {
 			isjumping = false;
 		}
-
+		if (transform.position.y <= 0.342 && (transform.position.x>=8.1 && transform.position.x<=12.5)) {
+			isjumping = true;
+		}
+		
+		if (transform.position.y <= 0.23 && (transform.position.x>=12.5 && transform.position.x<=13.3)) {
+			isjumping = true;
+		}
+		if (transform.position.y <= 0 && (transform.position.x>=13.3 && transform.position.x<=13.9)) {
+			isjumping = true;
+		}
 		float inputX = Input.GetAxis("Horizontal");
 		if (isjumping) {
 			inputX=inputX/2;
@@ -130,16 +142,19 @@ public class PlayerScript : MonoBehaviour
 
 				add=true;
 				col.gameObject.SetActive(false);
+				AudioSource audio=gameObject.AddComponent<AudioSource>();
+				audio.PlayOneShot(impact);
 				i++;
 				gameController.AddScore(ScoreValue);
 				if (i==11){
 					wall.SetActive(false);
 				}
-			}/*else{
+			}else{
 				player.SetActive(false);
 				Time.timeScale = 0;
 				GameOver.SetActive(true);
-			}*/
+
+			}
 			} else if (col.gameObject.CompareTag("Ennemi1")){
 				if (0.40 < pointCollision) {
 					add=true;

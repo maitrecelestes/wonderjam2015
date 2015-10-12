@@ -11,6 +11,9 @@ public class Mover : MonoBehaviour {
 	}
 	void OnCollisionEnter2D(Collision2D col)
 	{
-		Destroy (gameObject);
+			Destroy (gameObject);
+		if (col.gameObject.tag == "Fire") {
+			Destroy (col.gameObject);
+		}
 	}
 }

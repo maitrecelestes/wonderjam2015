@@ -21,13 +21,15 @@ public class PlayerScript5 : MonoBehaviour {
 	public GameObject feu2;
 	private GameObject zoneFeu;
 	private bool feuActivated=false;
-	
+
+	public Sprite imageG;
+	public Sprite imageD;
 
 	// Use this for initialization
 	void Start () {
 	
 
-
+		Time.timeScale = 1;
 		Player = GameObject.FindGameObjectWithTag ("Player");
 		PauseCanvas = GameObject.Find ("PauseCanvas");
 		PauseCanvas.SetActive (false);
@@ -43,6 +45,18 @@ public class PlayerScript5 : MonoBehaviour {
 	void Update () {
 
 		float inputX = Input.GetAxis("Horizontal");
+
+		if (inputX<0){
+			this.gameObject.GetComponent<SpriteRenderer>().sprite=imageG;
+		}
+		if (inputX>0){
+			this.gameObject.GetComponent<SpriteRenderer>().sprite=imageD;
+			
+		} 
+		if (isjumping) {
+			inputX=inputX/2;
+		}
+
 		movement = new Vector2(
 			inputX*speed.x,0);
 
@@ -59,7 +73,7 @@ public class PlayerScript5 : MonoBehaviour {
 			isjumping = false;
 		}
 
-		if (Input.GetKeyDown (KeyCode.Z)) {
+		if (Input.GetKeyDown (KeyCode.E)) {
 			if (feuActivated) {
 				Destroy (GameObject.FindGameObjectWithTag ("Fire"));
 				feuActivated = false;
@@ -69,7 +83,7 @@ public class PlayerScript5 : MonoBehaviour {
 				feuActivated = true;
 			}
 		}
-		if (Input.GetKeyDown (KeyCode.E)) {
+		if (Input.GetKeyDown (KeyCode.Z)) {
 			if (feuActivated) {
 				Destroy (GameObject.FindGameObjectWithTag ("Fire"));
 				feuActivated = false;
@@ -98,7 +112,7 @@ public class PlayerScript5 : MonoBehaviour {
 		
 	}
 	void OnCollisionEnter2D(Collision2D col){
-		if (col.gameObject.CompareTag ("Ennemi_niv5") || col.gameObject.CompareTag("EnnemiBolt")) {
+		if (col.gameObject.CompareTag ("Ennemi_niv5") ||col.gameObject.CompareTag ("Ennemi") || col.gameObject.CompareTag("EnnemiBolt")) {
 			gameObject.SetActive (false);
 			Time.timeScale = 0;
 			GameOver.SetActive (true);

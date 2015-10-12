@@ -23,8 +23,7 @@ public class PlayerScript4 : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	
-		//images = Resources.LoadAll<Sprite>("Assets/Textures3");
-
+		Time.timeScale = 1;
 		Player = GameObject.FindGameObjectWithTag ("Player");
 		PauseCanvas = GameObject.Find ("PauseCanvas");
 		PauseCanvas.SetActive (false);
@@ -42,16 +41,6 @@ public class PlayerScript4 : MonoBehaviour {
 		movement = new Vector2(
 			inputX*speed.x,
 			inputY*speed.y);
-		/*if (inputX<0)
-		{
-			Player.GetComponent<SpriteRenderer>().sprite = Images[0];
-
-		}
-		if (inputX>0)
-		{
-			Player.GetComponent<SpriteRenderer>().sprite = Images[0];
-
-		} */
 
 		if (Input.GetKey (KeyCode.RightControl) && Time.time > nextFire) {
 			Vector3 vector = new Vector3 (gameObject.transform.position.x + 2, gameObject.transform.position.y, 0);

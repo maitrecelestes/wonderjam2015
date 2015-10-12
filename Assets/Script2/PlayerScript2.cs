@@ -27,8 +27,7 @@ public class PlayerScript2 : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-
-		//images = Resources.LoadAll<Sprite>("Assets/Textures3");
+		Time.timeScale = 1;
 		PauseCanvas = GameObject.Find ("PauseCanvas");
 		PauseCanvas.SetActive (false);
 		player = GameObject.Find ("Heros");
@@ -55,6 +54,7 @@ public class PlayerScript2 : MonoBehaviour {
 		if (isjumping) {
 			inputX=inputX/2;
 		}
+
 
 		movement = new Vector2(
 			speed.x * inputX,

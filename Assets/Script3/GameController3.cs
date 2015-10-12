@@ -9,6 +9,8 @@ public class GameController3 : MonoBehaviour {
 	private GameObject wall;
 	private GameObject text;
 	private GameObject player;
+	public AudioClip impact;
+
 	// Use this for initialization
 	void Start () {
 		player = GameObject.Find ("Heros");
@@ -33,6 +35,8 @@ public class GameController3 : MonoBehaviour {
 	public void AddScore(int newScoreValue)
 	{
 		score += newScoreValue;
+		AudioSource audio=gameObject.AddComponent<AudioSource>();
+		audio.PlayOneShot(impact);
 		UpdateScore ();
 	}
 	void UpdateScore()

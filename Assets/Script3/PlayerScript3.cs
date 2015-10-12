@@ -31,7 +31,7 @@ public class PlayerScript3 : MonoBehaviour {
 
 	void Start () {
 		
-
+		Time.timeScale = 1;
 		murActive = false;
 		Player = GameObject.FindGameObjectWithTag ("Player");
 		PauseCanvas = GameObject.Find ("PauseCanvas");
@@ -47,7 +47,20 @@ public class PlayerScript3 : MonoBehaviour {
 		if (transform.position.y <= -4.3) {
 			isjumping = false;
 		}
-
+		if (transform.position.y <= -11.5 ) {
+			Player.SetActive(false);
+			Time.timeScale = 0;
+			GameOver.SetActive(true);
+		}
+		if (transform.position.y <= -0.9 && (transform.position.x>=22 && transform.position.x<=78.35)) {
+			isjumping = true;
+		}
+		if (transform.position.y <= 2.37 && (transform.position.x>=79 && transform.position.x<=110)) {
+			isjumping = true;
+		}
+		if (transform.position.y <= -2.5 && (transform.position.x>=111 && transform.position.x<=125)) {
+			isjumping = true;
+		}
 		float inputX = Input.GetAxis ("Horizontal");
 
 

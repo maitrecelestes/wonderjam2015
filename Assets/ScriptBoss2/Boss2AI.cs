@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Boss2AI : MonoBehaviour {
 	private GameObject ennemi;
@@ -16,10 +17,12 @@ public class Boss2AI : MonoBehaviour {
 	public GameObject shot2;
 	public Transform ShotSpawn;
 	private GameObject Player;
+	public Text text;
 	private GameObject Vic;
 
 	public Sprite imageG;
 	public Sprite imageD;
+	public AudioClip impact;
 
 	// Use this for initialization
 	void Start () {
@@ -34,6 +37,7 @@ public class Boss2AI : MonoBehaviour {
 	
 	// Deplacement des ennemis
 	void Update () { 
+		text.text = "HP: " + hp.ToString();
 
 		if (transform.position.x - Player.transform.position.x > 0) {
 			movement = new Vector2 (
@@ -71,9 +75,12 @@ public class Boss2AI : MonoBehaviour {
 	{
 		if (col.gameObject.CompareTag ("Bolt")) {
 			hp=hp-2;
+			AudioSource audio=gameObject.AddComponent<AudioSource>();
+			audio.PlayOneShot(impact);
 			Destroy (col.gameObject);
 			if (hp==0){
 				Destroy (ennemi);
+				player.SetActive(false);
 				Vic.SetActive(true);
 				Time.timeScale = 0;
 			}	
